@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五行能量测试 | Five Elements Energy Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --metal: #C0C0C0;
+            --wood: #4CAF50;
+            --water: #2196F3;
+            --fire: #FF5722;
+            --earth: #795548;
+            --primary: #5D4037;
+            --light-bg: #FFF9F0;
+        }
+        
+        body {
+            background-color: #f8f5f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0d6c9;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+        }
+        
+        .five-elements-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .element-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metal { background-color: var(--metal); }
+        .wood { background-color: var(--wood); }
+        .water { background-color: var(--water); }
+        .fire { background-color: var(--fire); }
+        .earth { background-color: var(--earth); }
+        
+        .test-description {
+            padding: 25px;
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .test-description ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .test-description li {
+            margin-bottom: 8px;
+        }
+        
+        .question-container {
+            padding: 20px;
+        }
+        
+        .question {
+            background-color: white;
+            border: 1px solid #e0d6c9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .question-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            border: 2px solid #e0d6c9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background-color: #f9f5f0;
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(93, 64, 55, 0.05);
+        }
+        
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background-color: #e0d6c9;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        
+        .option.selected .option-letter {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #prev-btn {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+        
+        #next-btn, #submit-btn, #retry-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        #prev-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        #next-btn:hover, #submit-btn:hover, #retry-btn:hover {
+            background-color: #8B4513;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-container {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .result-element {
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 500px;
+            color: white;
+        }
+        
+        .result-details {
+            text-align: left;
+            background-color: var(--light-bg);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .result-section {
+            margin-bottom: 25px;
+        }
+        
+        .result-section h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .tag {
+            padding: 5px 15px;
+            background-color: white;
+            border-radius: 20px;
+            border: 1px solid #e0d6c9;
+        }
+        
+        .colors, .crystals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .color-item, .crystal-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .color-sample {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .crystal-sample {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0d6c9;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .question-counter {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .instructions {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            border-top: 1px solid #e0d6c9;
+            margin-top: 30px;
+        }
+        
+        .bilingual-text {
+            display: block;
+        }
+        
+        .lang-zh {
+            margin-bottom: 5px;
+        }
+        
+        .lang-en {
+            font-style: italic;
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .question-container {
+                padding: 10px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .language-switcher {
+                position: static;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+            
+            <h1>
+                <span class="bilingual-text lang-zh">五行能量测试</span>
+                <span class="bilingual-text lang-en">Five Elements Energy Test</span>
+            </h1>
+            <div class="subtitle">
+                <span class="bilingual-text lang-zh">发现你的本命五行 | 找到你的天赋、幸运色与开运石</span>
+                <span class="bilingual-text lang-en">Discover Your Dominant Element | Find Your Talents, Lucky Colors & Crystals</span>
+            </div>
+            
+            <div class="five-elements-icons">
+                <div class="element-icon metal" data-zh="金" data-en="Metal">金</div>
+                <div class="element-icon wood" data-zh="木" data-en="Wood">木</div>
+                <div class="element-icon water" data-zh="水" data-en="Water">水</div>
+                <div class="element-icon fire" data-zh="火" data-en="Fire">火</div>
+                <div class="element-icon earth" data-zh="土" data-en="Earth">土</div>
+            </div>
+        </header>
+        
+        <div class="test-description">
+            <p class="bilingual-text lang-zh">你是否经常听到"五行"但觉得好复杂？不知道自己属于金、木、水、火、土中的哪种？</p>
+            <p class="bilingual-text lang-en">Do you often hear about the "Five Elements" but find it complicated? Not sure which element (Metal, Wood, Water, Fire, Earth) you belong to?</p>
+            
+            <p class="bilingual-text lang-zh">这份超简单的「五行能量自测表」，只需1分钟，通过你的外形、性格和偏好，就能快速了解你的天赋优势和小脾气。</p>
+            <p class="bilingual-text lang-en">This super simple "Five Elements Energy Test" takes just 1 minute. Through your appearance, personality, and preferences, you can quickly understand your talents and temperament.</p>
+            
+            <p class="bilingual-text lang-zh">测试结果能帮你：</p>
+            <p class="bilingual-text lang-en">The test results will help you:</p>
+            
+            <ul>
+                <li class="bilingual-text lang-zh">找到与你能量相合的水晶和幸运色</li>
+                <li class="bilingual-text lang-en">Find crystals and lucky colors that resonate with your energy</li>
+                
+                <li class="bilingual-text lang-zh">了解自己的天赋优势和小脾气</li>
+                <li class="bilingual-text lang-en">Understand your talent advantages and temperament</li>
+                
+                <li class="bilingual-text lang-zh">获取专属的能量开运小建议</li>
+                <li class="bilingual-text lang-en">Get personalized energy activation suggestions</li>
+            </ul>
+            
+            <p class="instructions bilingual-text lang-zh">请根据直觉选择最符合你的选项，完成全部8道题后查看结果</p>
+            <p class="instructions bilingual-text lang-en">Please choose the option that best suits you based on intuition. View results after completing all 8 questions</p>
+        </div>
+        
+        <div id="test-section">
+            <div class="question-counter">
+                <span class="bilingual-text lang-zh">问题</span>
+                <span class="bilingual-text lang-en">Question</span>
+                <span id="current-question">1</span> / 8
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            
+            <div class="question-container" id="questions-container">
+                <!-- 问题将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="buttons">
+                <button id="prev-btn" class="hidden">
+                    <span class="bilingual-text lang-zh"><i class="fas fa-chevron-left"></i> 上一题</span>
+                    <span class="bilingual-text lang-en"><i class="fas fa-chevron-left"></i> Previous</span>
+                </button>
+                <button id="next-btn">
+                    <span class="bilingual-text lang-zh">下一题 <i class="fas fa-chevron-right"></i></span>
+                    <span class="bilingual-text lang-en">Next <i class="fas fa-chevron-right"></i></span>
+                </button>
+                <button id="submit-btn" class="hidden">
+                    <span class="bilingual-text lang-zh">查看结果</span>
+                    <span class="bilingual-text lang-en">View Results</span>
+                </button>
+            </div>
+        </div>
+        
+        <div id="result-section" class="hidden">
+            <div class="result-container">
+                <h2>
+                    <span class="bilingual-text lang-zh">你的五行能量测试结果</span>
+                    <span class="bilingual-text lang-en">Your Five Elements Energy Test Result</span>
+                </h2>
+                <div id="result-element" class="result-element">木·生发者</div>
+                
+                <div class="result-details">
+                    <div class="result-section">
+                        <h3><i class="fas fa-bolt"></i> 
+                            <span class="bilingual-text lang-zh">核心能量</span>
+                            <span class="bilingual-text lang-en">Core Energy</span>
+                        </h3>
+                        <div id="core-energy" class="tags">
+                            <div class="tag bilingual-text lang-zh">成长</div>
+                            <div class="tag bilingual-text lang-en">Growth</div>
+                            <div class="tag bilingual-text lang-zh">创造力</div>
+                            <div class="tag bilingual-text lang-en">Creativity</div>
+                            <div class="tag bilingual-text lang-zh">仁爱</div>
+                            <div class="tag bilingual-text lang-en">Benevolence</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <h3><i class="fas fa-star"></i> 
+                            <span class="bilingual-text lang-zh">你的天赋</span>
+                            <span class="bilingual-text lang-en">Your Talents</span>
+                        </h3>
+                        <p id="talent" class="bilingual-text lang-zh">你像春天的新芽，充满生命力和活力，富有创造力，愿意分享，乐于助人。</p>
+                        <p id="talent-en" class="bilingual-text lang-en">You are like a spring sprout, full of vitality and energy, creative, willing to share, and helpful to others.</p>
+                    </div>
+                    
+                    <div class="result-section">
+                        <h3><i class="fas fa-palette"></i> 
+                            <span class="bilingual-text lang-zh">适合你的颜色</span>
+                            <span class="bilingual-text lang-en">Colors That Suit You</span>
+                        </h3>
+                        <div id="lucky-colors" class="colors">
+                            <!-- 颜色将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <h3><i class="fas fa-gem"></i> 
+                            <span class="bilingual-text lang-zh">能量水晶推荐</span>
+                            <span class="bilingual-text lang-en">Recommended Crystals</span>
+                        </h3>
+                        <div id="crystals" class="crystals">
+                            <!-- 水晶将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <h3><i class="fas fa-lightbulb"></i> 
+                            <span class="bilingual-text lang-zh">开运小建议</span>
+                            <span class="bilingual-text lang-en">Activation Suggestions</span>
+                        </h3>
+                        <p id="advice" class="bilingual-text lang-zh">多接触大自然，尝试创造性活动，保持开放心态，与他人分享你的想法和能量。</p>
+                        <p id="advice-en" class="bilingual-text lang-en">Connect with nature more, try creative activities, keep an open mind, and share your ideas and energy with others.</p>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button id="retry-btn">
+                        <span class="bilingual-text lang-zh">重新测试</span>
+                        <span class="bilingual-text lang-en">Retry Test</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p class="bilingual-text lang-zh">五行能量测试 | 基于中国传统文化五行理论设计</p>
+        <p class="bilingual-text lang-en">Five Elements Energy Test | Designed based on Traditional Chinese Five Elements Theory</p>
+        <p class="bilingual-text lang-zh">本测试仅供娱乐参考，更多深度分析请咨询专业人士</p>
+        <p class="bilingual-text lang-en">This test is for entertainment purposes only. For deeper analysis, please consult professionals</p>
+    </footer>
+
+    <script>
+        // 双语文本数据
+        const translations = {
+            zh: {
+                "testTitle": "五行能量测试",
+                "testSubtitle": "发现你的本命五行 | 找到你的天赋、幸运色与开运石",
+                "description1": "你是否经常听到'五行'但觉得好复杂？不知道自己属于金、木、水、火、土中的哪种？",
+                "description2": "这份超简单的「五行能量自测表」，只需1分钟，通过你的外形、性格和偏好，就能快速了解你的天赋优势和小脾气。",
+                "description3": "测试结果能帮你：",
+                "benefit1": "找到与你能量相合的水晶和幸运色",
+                "benefit2": "了解自己的天赋优势和小脾气",
+                "benefit3": "获取专属的能量开运小建议",
+                "instructions": "请根据直觉选择最符合你的选项，完成全部8道题后查看结果",
+                "question": "问题",
+                "previous": "上一题",
+                "next": "下一题",
+                "viewResults": "查看结果",
+                "yourResult": "你的五行能量测试结果",
+                "coreEnergy": "核心能量",
+                "yourTalents": "你的天赋",
+                "colorsThatSuitYou": "适合你的颜色",
+                "recommendedCrystals": "能量水晶推荐",
+                "activationSuggestions": "开运小建议",
+                "retryTest": "重新测试",
+                "footer1": "五行能量测试 | 基于中国传统文化五行理论设计",
+                "footer2": "本测试仅供娱乐参考，更多深度分析请咨询专业人士"
+            },
+            en: {
+                "testTitle": "Five Elements Energy Test",
+                "testSubtitle": "Discover Your Dominant Element | Find Your Talents, Lucky Colors & Crystals",
+                "description1": "Do you often hear about the 'Five Elements' but find it complicated? Not sure which element (Metal, Wood, Water, Fire, Earth) you belong to?",
+                "description2": "This super simple 'Five Elements Energy Test' takes just 1 minute. Through your appearance, personality, and preferences, you can quickly understand your talents and temperament.",
+                "description3": "The test results will help you:",
+                "benefit1": "Find crystals and lucky colors that resonate with your energy",
+                "benefit2": "Understand your talent advantages and temperament",
+                "benefit3": "Get personalized energy activation suggestions",
+                "instructions": "Please choose the option that best suits you based on intuition. View results after completing all 8 questions",
+                "question": "Question",
+                "previous": "Previous",
+                "next": "Next",
+                "viewResults": "View Results",
+                "yourResult": "Your Five Elements Energy Test Result",
+                "coreEnergy": "Core Energy",
+                "yourTalents": "Your Talents",
+                "colorsThatSuitYou": "Colors That Suit You",
+                "recommendedCrystals": "Recommended Crystals",
+                "activationSuggestions": "Activation Suggestions",
+                "retryTest": "Retry Test",
+                "footer1": "Five Elements Energy Test | Designed based on Traditional Chinese Five Elements Theory",
+                "footer2": "This test is for entertainment purposes only. For deeper analysis, please consult professionals"
+            }
+        };
+
+        // 测试题目数据 - 双语
+        const questions = [
+            {
+                question: {
+                    zh: "1. 你的外在气质最接近哪一种？",
+                    en: "1. Which of the following best describes your external temperament?"
+                },
+                options: [
+                    { zh: "精致、有棱角、气场强", en: "Refined, angular, strong presence", value: "A" },
+                    { zh: "修长、清新、有活力", en: "Slender, fresh, energetic", value: "B" },
+                    { zh: "圆润、柔和、有亲和力", en: "Rounded, gentle, approachable", value: "C" },
+                    { zh: "热情、立体、引人注目", en: "Passionate, three-dimensional, eye-catching", value: "D" },
+                    { zh: "沉稳、稳重、有力量感", en: "Calm, steady, powerful", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "2. 你的性格底色更偏向？",
+                    en: "2. What is the foundation of your personality?"
+                },
+                options: [
+                    { zh: "讲义气，目标明确，但有点固执", en: "Loyal, goal-oriented, but somewhat stubborn", value: "A" },
+                    { zh: "有创意，喜欢自由，但情绪易波动", en: "Creative, love freedom, but emotions fluctuate easily", value: "B" },
+                    { zh: "情商高，适应力强，但有时缺乏主见", en: "High EQ, adaptable, but sometimes indecisive", value: "C" },
+                    { zh: "开朗热情，行动力强，但有点急躁", en: "Cheerful and passionate, strong execution, but a bit impatient", value: "D" },
+                    { zh: "务实可靠，有耐心，但偶尔沉闷", en: "Practical and reliable, patient, but occasionally dull", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "3. 你最喜欢的颜色系列是？",
+                    en: "3. What is your favorite color series?"
+                },
+                options: [
+                    { zh: "金色、银色、白色、大地色系", en: "Gold, silver, white, earth tones", value: "A" },
+                    { zh: "绿色、青色、蓝色", en: "Green, cyan, blue", value: "B" },
+                    { zh: "黑色、深蓝色、灰色", en: "Black, dark blue, gray", value: "C" },
+                    { zh: "红色、紫色、橙色", en: "Red, purple, orange", value: "D" },
+                    { zh: "黄色、棕色、咖啡色", en: "Yellow, brown, coffee", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "4. 你内心最向往的状态是？",
+                    en: "4. What state do you most aspire to in your heart?"
+                },
+                options: [
+                    { zh: "获得成就、财富和清晰的规则", en: "Achieving success, wealth, and clear rules", value: "A" },
+                    { zh: "不断成长、探索和拥有无限可能性", en: "Continuous growth, exploration, and unlimited possibilities", value: "B" },
+                    { zh: "平静、智慧、以柔克刚", en: "Calm, wise, overcoming hardness with softness", value: "C" },
+                    { zh: "绽放光芒、被认可、体验激情", en: "Shining, being recognized, experiencing passion", value: "D" },
+                    { zh: "稳定、富足、被深深滋养", en: "Stable, abundant, deeply nourished", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "5. 遇到压力时，你的第一反应更像？",
+                    en: "5. What is your first reaction when facing stress?"
+                },
+                options: [
+                    { zh: "坚持原则，硬扛或反击", en: "Stick to principles, endure or fight back", value: "A" },
+                    { zh: "想办法变通或暂时躲开", en: "Find ways to adapt or temporarily avoid", value: "B" },
+                    { zh: "冷静观察，找规律再行动", en: "Calmly observe, find patterns before acting", value: "C" },
+                    { zh: "立刻行动，用忙碌化解焦虑", en: "Take immediate action, use busyness to resolve anxiety", value: "D" },
+                    { zh: "吃顿好的，或找熟悉的环境放松", en: "Eat well, or relax in a familiar environment", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "6. 在团队里，你常扮演什么角色？",
+                    en: "6. What role do you often play in a team?"
+                },
+                options: [
+                    { zh: "领导/裁判（定规则、分对错）", en: "Leader/Referee (set rules, judge right and wrong)", value: "A" },
+                    { zh: "创新者/联络人（出点子、活跃气氛）", en: "Innovator/Connector (come up with ideas, liven up the atmosphere)", value: "B" },
+                    { zh: "倾听者/调和者（缓和矛盾、照顾情绪）", en: "Listener/Mediator (ease conflicts, care for emotions)", value: "C" },
+                    { zh: "推动者/发言人（对外表达、带节奏）", en: "Promoter/Spokesperson (external expression, set the pace)", value: "D" },
+                    { zh: "后勤者/执行者（默默做事、保障运转）", en: "Logistics/Executor (work silently, ensure operation)", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "7. 哪种方式最能让你恢复能量？",
+                    en: "7. Which way best helps you regain energy?"
+                },
+                options: [
+                    { zh: "独自完成一件有挑战的事", en: "Complete a challenging task alone", value: "A" },
+                    { zh: "接触大自然、学习新东西", en: "Connect with nature, learn new things", value: "B" },
+                    { zh: "冥想、听水声、泡澡", en: "Meditate, listen to water sounds, take a bath", value: "C" },
+                    { zh: "运动、聚会、被人关注", en: "Exercise, social gatherings, being noticed", value: "D" },
+                    { zh: "吃好吃的、睡觉、宅在家里", en: "Eat good food, sleep, stay at home", value: "E" }
+                ]
+            },
+            {
+                question: {
+                    zh: "8. 朋友最可能用哪个词形容你？",
+                    en: "8. Which word are friends most likely to use to describe you?"
+                },
+                options: [
+                    { zh: "果断/强势", en: "Decisive/Dominant", value: "A" },
+                    { zh: "灵动/善变", en: "Agile/Changeable", value: "B" },
+                    { zh: "温柔/神秘", en: "Gentle/Mysterious", value: "C" },
+                    { zh: "热情/冲动", en: "Passionate/Impulsive", value: "D" },
+                    { zh: "踏实/有点慢", en: "Down-to-earth/A bit slow", value: "E" }
+                ]
+            }
+        ];
+
+        // 五行结果数据 - 双语
+        const elementResults = {
+            "A": {
+                name: { zh: "金·裁决者", en: "Metal · The Arbiter" },
+                color: "metal",
+                coreEnergy: [
+                    { zh: "坚定", en: "Determined" },
+                    { zh: "果断", en: "Decisive" },
+                    { zh: "规则", en: "Rule-oriented" },
+                    { zh: "秩序", en: "Orderly" }
+                ],
+                talent: {
+                    zh: "你像金属一样坚定，目标明确，有决断力，重视规则和秩序，是优秀的组织者和领导者。",
+                    en: "You are as firm as metal, with clear goals, decisive, value rules and order, and are an excellent organizer and leader."
+                },
+                luckyColors: [
+                    { name: { zh: "金色", en: "Gold" }, color: "#FFD700" },
+                    { name: { zh: "银色", en: "Silver" }, color: "#C0C0C0" },
+                    { name: { zh: "白色", en: "White" }, color: "#FFFFFF" },
+                    { name: { zh: "大地色", en: "Earth Tone" }, color: "#8B4513" }
+                ],
+                crystals: [
+                    { name: { zh: "白水晶", en: "Clear Quartz" }, icon: "💎", color: "#FFFFFF" },
+                    { name: { zh: "金发晶", en: "Rutilated Quartz" }, icon: "✨", color: "#FFD700" },
+                    { name: { zh: "黄铁矿", en: "Pyrite" }, icon: "⭐", color: "#B8860B" }
+                ],
+                advice: {
+                    zh: "培养耐心，学习倾听他人意见。适合佩戴金属饰品，多接触整洁有序的环境。",
+                    en: "Cultivate patience and learn to listen to others' opinions. Suitable for wearing metal accessories, and spend more time in tidy and orderly environments."
+                }
+            },
+            "B": {
+                name: { zh: "木·生发者", en: "Wood · The Grower" },
+                color: "wood",
+                coreEnergy: [
+                    { zh: "成长", en: "Growth" },
+                    { zh: "创造力", en: "Creativity" },
+                    { zh: "仁爱", en: "Benevolence" },
+                    { zh: "活力", en: "Vitality" }
+                ],
+                talent: {
+                    zh: "你像春天的新芽，充满生命力和创造力，愿意分享，乐于助人，具有强大的成长潜力。",
+                    en: "You are like a spring sprout, full of vitality and creativity, willing to share, helpful to others, and have great growth potential."
+                },
+                luckyColors: [
+                    { name: { zh: "绿色", en: "Green" }, color: "#4CAF50" },
+                    { name: { zh: "青色", en: "Cyan" }, color: "#009688" },
+                    { name: { zh: "蓝色", en: "Blue" }, color: "#2196F3" }
+                ],
+                crystals: [
+                    { name: { zh: "绿幽灵", en: "Green Phantom Quartz" }, icon: "🔮", color: "#4CAF50" },
+                    { name: { zh: "孔雀石", en: "Malachite" }, icon: "🪶", color: "#0A9E0A" },
+                    { name: { zh: "橄榄石", en: "Peridot" }, icon: "💚", color: "#9ACD32" }
+                ],
+                advice: {
+                    zh: "多接触大自然，尝试创造性活动，保持开放心态，与他人分享你的想法和能量。",
+                    en: "Connect with nature more, try creative activities, keep an open mind, and share your ideas and energy with others."
+                }
+            },
+            "C": {
+                name: { zh: "水·洞察者", en: "Water · The Observer" },
+                color: "water",
+                coreEnergy: [
+                    { zh: "智慧", en: "Wisdom" },
+                    { zh: "包容", en: "Tolerance" },
+                    { zh: "流动", en: "Fluidity" },
+                    { zh: "适应", en: "Adaptability" }
+                ],
+                talent: {
+                    zh: "你像水一样柔顺，适应性强，善于观察，富有智慧，能够洞察事物本质，以柔克刚。",
+                    en: "You are as flexible as water, highly adaptable, good at observation, wise, able to see the essence of things, and overcome hardness with softness."
+                },
+                luckyColors: [
+                    { name: { zh: "黑色", en: "Black" }, color: "#000000" },
+                    { name: { zh: "深蓝色", en: "Dark Blue" }, color: "#0A2463" },
+                    { name: { zh: "灰色", en: "Gray" }, color: "#808080" }
+                ],
+                crystals: [
+                    { name: { zh: "黑曜石", en: "Obsidian" }, icon: "🪨", color: "#000000" },
+                    { name: { zh: "海蓝宝", en: "Aquamarine" }, icon: "🌊", color: "#7FFFD4" },
+                    { name: { zh: "月光石", en: "Moonstone" }, icon: "🌙", color: "#C0C0C0" }
+                ],
+                advice: {
+                    zh: "保持内心的平静，多进行冥想和反思。适合近水而居，培养深度思考能力。",
+                    en: "Maintain inner peace, practice meditation and reflection. Suitable for living near water, cultivate deep thinking ability."
+                }
+            },
+            "D": {
+                name: { zh: "火·发光者", en: "Fire · The Illuminator" },
+                color: "fire",
+                coreEnergy: [
+                    { zh: "热情", en: "Passion" },
+                    { zh: "行动力", en: "Action-oriented" },
+                    { zh: "活力", en: "Vitality" },
+                    { zh: "激情", en: "Enthusiasm" }
+                ],
+                talent: {
+                    zh: "你像火焰一样热情，充满活力，行动力强，能够感染他人，具有强大的领导力和表现力。",
+                    en: "You are as passionate as fire, full of energy, strong in execution, able to inspire others, and have great leadership and expressiveness."
+                },
+                luckyColors: [
+                    { name: { zh: "红色", en: "Red" }, color: "#FF5722" },
+                    { name: { zh: "紫色", en: "Purple" }, color: "#9C27B0" },
+                    { name: { zh: "橙色", en: "Orange" }, color: "#FF9800" }
+                ],
+                crystals: [
+                    { name: { zh: "红纹石", en: "Rhodochrosite" }, icon: "❤️", color: "#FF4081" },
+                    { name: { zh: "紫锂辉", en: "Kunzite" }, icon: "💜", color: "#CE93D8" },
+                    { name: { zh: "红宝石", en: "Ruby" }, icon: "🔥", color: "#D32F2F" }
+                ],
+                advice: {
+                    zh: "学会控制情绪，避免冲动决定。多参与社交活动，发挥你的热情和领导力。",
+                    en: "Learn to control emotions and avoid impulsive decisions. Participate in more social activities and use your passion and leadership."
+                }
+            },
+            "E": {
+                name: { zh: "土·培育者", en: "Earth · The Nurturer" },
+                color: "earth",
+                coreEnergy: [
+                    { zh: "稳定", en: "Stable" },
+                    { zh: "务实", en: "Practical" },
+                    { zh: "耐心", en: "Patient" },
+                    { zh: "滋养", en: "Nurturing" }
+                ],
+                talent: {
+                    zh: "你像大地一样稳定，务实可靠，有耐心，能够滋养他人，是团队中坚实的后盾和支持者。",
+                    en: "You are as stable as the earth, practical and reliable, patient, able to nurture others, and are a solid supporter in the team."
+                },
+                luckyColors: [
+                    { name: { zh: "黄色", en: "Yellow" }, color: "#FFC107" },
+                    { name: { zh: "棕色", en: "Brown" }, color: "#795548" },
+                    { name: { zh: "咖啡色", en: "Coffee" }, color: "#5D4037" }
+                ],
+                crystals: [
+                    { name: { zh: "黄水晶", en: "Citrine" }, icon: "🧡", color: "#FFB300" },
+                    { name: { zh: "虎眼石", en: "Tiger's Eye" }, icon: "🐅", color: "#B388FF" },
+                    { name: { zh: "玛瑙", en: "Agate" }, icon: "🟤", color: "#8D6E63" }
+                ],
+                advice: {
+                    zh: "保持务实态度，适当放松自己。多参与户外活动，与大地连接，培养耐心和稳定性。",
+                    en: "Maintain a practical attitude and relax appropriately. Participate in outdoor activities, connect with the earth, and cultivate patience and stability."
+                }
+            }
+        };
+
+        // 当前语言设置
+        let currentLanguage = "zh";
+        
+        // 用户答案存储
+        let userAnswers = Array(questions.length).fill(null);
+        let currentQuestionIndex = 0;
+
+        // DOM元素
+        const questionsContainer = document.getElementById('questions-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const retryBtn = document.getElementById('retry-btn');
+        const testSection = document.getElementById('test-section');
+        const resultSection = document.getElementById('result-section');
+        const currentQuestionSpan = document.getElementById('current-question');
+        const progressBar = document.getElementById('progress-bar');
+        const resultElement = document.getElementById('result-element');
+        const coreEnergyDiv = document.getElementById('core-energy');
+        const talentPara = document.getElementById('talent');
+        const talentEnPara = document.getElementById('talent-en');
+        const luckyColorsDiv = document.getElementById('lucky-colors');
+        const crystalsDiv = document.getElementById('crystals');
+        const advicePara = document.getElementById('advice');
+        const adviceEnPara = document.getElementById('advice-en');
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const elementIcons = document.querySelectorAll('.element-icon');
+
+        // 初始化测试
+        function initTest() {
+            renderQuestion();
+            updateButtons();
+            updateProgressBar();
+        }
+
+        // 渲染当前问题
+        function renderQuestion() {
+            const question = questions[currentQuestionIndex];
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestionIndex] === option.value;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-value="${option.value}">
+                        <div class="option-letter">${option.value}</div>
+                        <div class="option-text">
+                            <span class="bilingual-text lang-zh">${option.zh}</span>
+                            <span class="bilingual-text lang-en">${option.en}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            questionsContainer.innerHTML = `
+                <div class="question">
+                    <div class="question-title">
+                        <span class="question-number">${currentQuestionIndex + 1}</span>
+                        <span class="bilingual-text lang-zh">${question.question.zh}</span>
+                        <span class="bilingual-text lang-en">${question.question.en}</span>
+                    </div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+            
+            // 添加选项选择事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    userAnswers[currentQuestionIndex] = value;
+                    renderQuestion();
+                });
+            });
+            
+            // 更新语言显示
+            updateLanguageDisplay();
+        }
+
+        // 更新按钮状态
+        function updateButtons() {
+            if (currentQuestionIndex === 0) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        // 更新进度条
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // 更新语言显示
+        function updateLanguageDisplay() {
+            // 更新所有双语文本
+            document.querySelectorAll('.bilingual-text').forEach(element => {
+                if (element.classList.contains(`lang-${currentLanguage}`)) {
+                    element.style.display = 'block';
+                } else {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // 更新五行图标文本
+            elementIcons.forEach(icon => {
+                const zhText = icon.getAttribute('data-zh');
+                const enText = icon.getAttribute('data-en');
+                if (currentLanguage === 'zh') {
+                    icon.textContent = zhText;
+                } else {
+                    icon.textContent = enText;
+                }
+            });
+            
+            // 更新按钮文本
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === currentLanguage) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // 切换语言
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            updateLanguageDisplay();
+            
+            // 如果当前在测试页面，重新渲染问题以更新语言
+            if (!testSection.classList.contains('hidden')) {
+                renderQuestion();
+            }
+        }
+
+        // 下一题
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateButtons();
+                updateProgressBar();
+            }
+        });
+
+        // 上一题
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateButtons();
+                updateProgressBar();
+            }
+        });
+
+        // 提交答案
+        submitBtn.addEventListener('click', function() {
+            // 检查是否所有问题都已回答
+            const unanswered = userAnswers.filter(answer => answer === null).length;
+            if (unanswered > 0) {
+                if (currentLanguage === 'zh') {
+                    alert(`您还有 ${unanswered} 个问题未回答，请完成所有问题后再提交。`);
+                } else {
+                    alert(`You have ${unanswered} unanswered questions. Please complete all questions before submitting.`);
+                }
+                return;
+            }
+            
+            // 计算五行结果
+            const result = calculateResult();
+            showResult(result);
+        });
+
+        // 重新测试
+        retryBtn.addEventListener('click', function() {
+            userAnswers = Array(questions.length).fill(null);
+            currentQuestionIndex = 0;
+            testSection.classList.remove('hidden');
+            resultSection.classList.add('hidden');
+            initTest();
+        });
+
+        // 计算五行结果
+        function calculateResult() {
+            const counts = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+            
+            userAnswers.forEach(answer => {
+                if (answer !== null) {
+                    counts[answer]++;
+                }
+            });
+            
+            // 找到最大值
+            let maxCount = 0;
+            let maxElement = "B"; // 默认值
+            
+            for (const [element, count] of Object.entries(counts)) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    maxElement = element;
+                }
+            }
+            
+            return maxElement;
+        }
+
+        // 显示结果
+        function showResult(elementCode) {
+            const result = elementResults[elementCode];
+            
+            // 更新结果元素
+            if (currentLanguage === 'zh') {
+                resultElement.textContent = result.name.zh;
+            } else {
+                resultElement.textContent = result.name.en;
+            }
+            resultElement.className = `result-element ${result.color}`;
+            
+            // 更新核心能量
+            coreEnergyDiv.innerHTML = '';
+            result.coreEnergy.forEach(energy => {
+                if (currentLanguage === 'zh') {
+                    coreEnergyDiv.innerHTML += `<div class="tag">${energy.zh}</div>`;
+                } else {
+                    coreEnergyDiv.innerHTML += `<div class="tag">${energy.en}</div>`;
+                }
+            });
+            
+            // 更新天赋
+            if (currentLanguage === 'zh') {
+                talentPara.textContent = result.talent.zh;
+                talentEnPara.textContent = result.talent.en;
+            } else {
+                talentPara.textContent = result.talent.en;
+                talentEnPara.textContent = result.talent.zh;
+            }
+            
+            // 更新幸运颜色
+            luckyColorsDiv.innerHTML = '';
+            result.luckyColors.forEach(color => {
+                luckyColorsDiv.innerHTML += `
+                    <div class="color-item">
+                        <div class="color-sample" style="background-color: ${color.color};"></div>
+                        <span>${currentLanguage === 'zh' ? color.name.zh : color.name.en}</span>
+                    </div>
+                `;
+            });
+            
+            // 更新水晶推荐
+            crystalsDiv.innerHTML = '';
+            result.crystals.forEach(crystal => {
+                crystalsDiv.innerHTML += `
+                    <div class="crystal-item">
+                        <div class="crystal-sample" style="background-color: ${crystal.color};">
+                            ${crystal.icon}
+                        </div>
+                        <span>${currentLanguage === 'zh' ? crystal.name.zh : crystal.name.en}</span>
+                    </div>
+                `;
+            });
+            
+            // 更新建议
+            if (currentLanguage === 'zh') {
+                advicePara.textContent = result.advice.zh;
+                adviceEnPara.textContent = result.advice.en;
+            } else {
+                advicePara.textContent = result.advice.en;
+                adviceEnPara.textContent = result.advice.zh;
+            }
+            
+            // 显示结果部分
+            testSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+            
+            // 更新结果页面的语言显示
+            updateLanguageDisplay();
+        }
+
+        // 语言切换按钮事件
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        // 初始化
+        initTest();
+    </script>
+</body>
+</html>
