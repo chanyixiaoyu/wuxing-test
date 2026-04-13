@@ -515,9 +515,9 @@
                     <span class="bilingual-text lang-zh">你的五行能量测试结果</span>
                     <span class="bilingual-text lang-en">Your Five Elements Energy Test Result</span>
                 </h2>
-                <div id="result-element" class="result-element">
-                    <span id="element-name-zh" class="bilingual-text lang-zh">木·生发者</span>
-                    <span id="element-name-en" class="bilingual-text lang-en">Wood · The Grower</span>
+                <div id="result-element" class="result-element wood">
+                    <div id="element-name-zh" class="bilingual-text lang-zh">木·生发者</div>
+                    <div id="element-name-en" class="bilingual-text lang-en">Wood · The Grower</div>
                 </div>
                 
                 <div class="result-details">
@@ -536,8 +536,8 @@
                             <span class="bilingual-text lang-zh">你的天赋</span>
                             <span class="bilingual-text lang-en">Your Talents</span>
                         </h3>
-                        <p id="talent" class="bilingual-text lang-zh">你像春天的新芽，充满生命力和活力，富有创造力，愿意分享，乐于助人。</p>
-                        <p id="talent-en" class="bilingual-text lang-en">You are like a spring sprout, full of vitality and energy, creative, willing to share, and helpful to others.</p>
+                        <p id="talent-zh" class="bilingual-text lang-zh">你像春天的新芽，充满生命力和创造力，愿意分享，乐于助人，具有强大的成长潜力。</p>
+                        <p id="talent-en" class="bilingual-text lang-en">You are like a spring sprout, full of vitality and creativity, willing to share, helpful to others, and have great growth potential.</p>
                     </div>
                     
                     <div class="result-section">
@@ -565,7 +565,7 @@
                             <span class="bilingual-text lang-zh">开运小建议</span>
                             <span class="bilingual-text lang-en">Activation Suggestions</span>
                         </h3>
-                        <p id="advice" class="bilingual-text lang-zh">多接触大自然，尝试创造性活动，保持开放心态，与他人分享你的想法和能量。</p>
+                        <p id="advice-zh" class="bilingual-text lang-zh">多接触大自然，尝试创造性活动，保持开放心态，与他人分享你的想法和能量。</p>
                         <p id="advice-en" class="bilingual-text lang-en">Connect with nature more, try creative activities, keep an open mind, and share your ideas and energy with others.</p>
                     </div>
                 </div>
@@ -929,12 +929,12 @@
         const elementNameZh = document.getElementById('element-name-zh');
         const elementNameEn = document.getElementById('element-name-en');
         const coreEnergyDiv = document.getElementById('core-energy');
-        const talentPara = document.getElementById('talent');
-        const talentEnPara = document.getElementById('talent-en');
+        const talentZh = document.getElementById('talent-zh');
+        const talentEn = document.getElementById('talent-en');
         const luckyColorsDiv = document.getElementById('lucky-colors');
         const crystalsDiv = document.getElementById('crystals');
-        const advicePara = document.getElementById('advice');
-        const adviceEnPara = document.getElementById('advice-en');
+        const adviceZh = document.getElementById('advice-zh');
+        const adviceEn = document.getElementById('advice-en');
         const langButtons = document.querySelectorAll('.lang-btn');
         const elementIcons = document.querySelectorAll('.element-icon');
 
@@ -1141,18 +1141,15 @@
             // 更新核心能量
             coreEnergyDiv.innerHTML = '';
             result.coreEnergy.forEach(energy => {
-                if (currentLanguage === 'zh') {
-                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-zh">${energy.zh}</div>`;
-                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-en hidden">${energy.en}</div>`;
-                } else {
-                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-zh hidden">${energy.zh}</div>`;
-                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-en">${energy.en}</div>`;
-                }
+                coreEnergyDiv.innerHTML += `
+                    <div class="tag bilingual-text lang-zh">${energy.zh}</div>
+                    <div class="tag bilingual-text lang-en">${energy.en}</div>
+                `;
             });
             
             // 更新天赋
-            talentPara.textContent = result.talent.zh;
-            talentEnPara.textContent = result.talent.en;
+            talentZh.textContent = result.talent.zh;
+            talentEn.textContent = result.talent.en;
             
             // 更新幸运颜色
             luckyColorsDiv.innerHTML = '';
@@ -1161,7 +1158,7 @@
                     <div class="color-item">
                         <div class="color-sample" style="background-color: ${color.color};"></div>
                         <span class="bilingual-text lang-zh">${color.name.zh}</span>
-                        <span class="bilingual-text lang-en hidden">${color.name.en}</span>
+                        <span class="bilingual-text lang-en">${color.name.en}</span>
                     </div>
                 `;
             });
@@ -1175,14 +1172,14 @@
                             ${crystal.icon}
                         </div>
                         <span class="bilingual-text lang-zh">${crystal.name.zh}</span>
-                        <span class="bilingual-text lang-en hidden">${crystal.name.en}</span>
+                        <span class="bilingual-text lang-en">${crystal.name.en}</span>
                     </div>
                 `;
             });
             
             // 更新建议
-            advicePara.textContent = result.advice.zh;
-            adviceEnPara.textContent = result.advice.en;
+            adviceZh.textContent = result.advice.zh;
+            adviceEn.textContent = result.advice.en;
             
             // 显示结果部分
             if (showSection) {
