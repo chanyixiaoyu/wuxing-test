@@ -515,7 +515,10 @@
                     <span class="bilingual-text lang-zh">你的五行能量测试结果</span>
                     <span class="bilingual-text lang-en">Your Five Elements Energy Test Result</span>
                 </h2>
-                <div id="result-element" class="result-element">木·生发者</div>
+                <div id="result-element" class="result-element">
+                    <span id="element-name-zh" class="bilingual-text lang-zh">木·生发者</span>
+                    <span id="element-name-en" class="bilingual-text lang-en">Wood · The Grower</span>
+                </div>
                 
                 <div class="result-details">
                     <div class="result-section">
@@ -524,12 +527,7 @@
                             <span class="bilingual-text lang-en">Core Energy</span>
                         </h3>
                         <div id="core-energy" class="tags">
-                            <div class="tag bilingual-text lang-zh">成长</div>
-                            <div class="tag bilingual-text lang-en">Growth</div>
-                            <div class="tag bilingual-text lang-zh">创造力</div>
-                            <div class="tag bilingual-text lang-en">Creativity</div>
-                            <div class="tag bilingual-text lang-zh">仁爱</div>
-                            <div class="tag bilingual-text lang-en">Benevolence</div>
+                            <!-- 动态生成 -->
                         </div>
                     </div>
                     
@@ -753,7 +751,10 @@
         // 五行结果数据 - 双语
         const elementResults = {
             "A": {
-                name: { zh: "金·裁决者", en: "Metal · The Arbiter" },
+                name: { 
+                    zh: "金·裁决者", 
+                    en: "Metal · The Arbiter" 
+                },
                 color: "metal",
                 coreEnergy: [
                     { zh: "坚定", en: "Determined" },
@@ -782,7 +783,10 @@
                 }
             },
             "B": {
-                name: { zh: "木·生发者", en: "Wood · The Grower" },
+                name: { 
+                    zh: "木·生发者", 
+                    en: "Wood · The Grower" 
+                },
                 color: "wood",
                 coreEnergy: [
                     { zh: "成长", en: "Growth" },
@@ -810,7 +814,10 @@
                 }
             },
             "C": {
-                name: { zh: "水·洞察者", en: "Water · The Observer" },
+                name: { 
+                    zh: "水·洞察者", 
+                    en: "Water · The Observer" 
+                },
                 color: "water",
                 coreEnergy: [
                     { zh: "智慧", en: "Wisdom" },
@@ -838,13 +845,16 @@
                 }
             },
             "D": {
-                name: { zh: "火·发光者", en: "Fire · The Illuminator" },
+                name: { 
+                    zh: "火·发光者", 
+                    en: "Fire · The Illuminator" 
+                },
                 color: "fire",
                 coreEnergy: [
-                    { zh: "热情", en: "Passion" },
+                    { zh: "热情", en: "Passionate" },
                     { zh: "行动力", en: "Action-oriented" },
-                    { zh: "活力", en: "Vitality" },
-                    { zh: "激情", en: "Enthusiasm" }
+                    { zh: "活力", en: "Energetic" },
+                    { zh: "激情", en: "Enthusiastic" }
                 ],
                 talent: {
                     zh: "你像火焰一样热情，充满活力，行动力强，能够感染他人，具有强大的领导力和表现力。",
@@ -866,7 +876,10 @@
                 }
             },
             "E": {
-                name: { zh: "土·培育者", en: "Earth · The Nurturer" },
+                name: { 
+                    zh: "土·培育者", 
+                    en: "Earth · The Nurturer" 
+                },
                 color: "earth",
                 coreEnergy: [
                     { zh: "稳定", en: "Stable" },
@@ -913,6 +926,8 @@
         const currentQuestionSpan = document.getElementById('current-question');
         const progressBar = document.getElementById('progress-bar');
         const resultElement = document.getElementById('result-element');
+        const elementNameZh = document.getElementById('element-name-zh');
+        const elementNameEn = document.getElementById('element-name-en');
         const coreEnergyDiv = document.getElementById('core-energy');
         const talentPara = document.getElementById('talent');
         const talentEnPara = document.getElementById('talent-en');
@@ -1036,6 +1051,10 @@
             // 如果当前在测试页面，重新渲染问题以更新语言
             if (!testSection.classList.contains('hidden')) {
                 renderQuestion();
+            } else if (!resultSection.classList.contains('hidden')) {
+                // 如果在结果页面，重新计算并显示结果
+                const result = calculateResult();
+                showResult(result, false);
             }
         }
 
@@ -1074,7 +1093,7 @@
             
             // 计算五行结果
             const result = calculateResult();
-            showResult(result);
+            showResult(result, true);
         });
 
         // 重新测试
@@ -1111,35 +1130,29 @@
         }
 
         // 显示结果
-        function showResult(elementCode) {
+        function showResult(elementCode, showSection = true) {
             const result = elementResults[elementCode];
             
             // 更新结果元素
-            if (currentLanguage === 'zh') {
-                resultElement.textContent = result.name.zh;
-            } else {
-                resultElement.textContent = result.name.en;
-            }
+            elementNameZh.textContent = result.name.zh;
+            elementNameEn.textContent = result.name.en;
             resultElement.className = `result-element ${result.color}`;
             
             // 更新核心能量
             coreEnergyDiv.innerHTML = '';
             result.coreEnergy.forEach(energy => {
                 if (currentLanguage === 'zh') {
-                    coreEnergyDiv.innerHTML += `<div class="tag">${energy.zh}</div>`;
+                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-zh">${energy.zh}</div>`;
+                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-en hidden">${energy.en}</div>`;
                 } else {
-                    coreEnergyDiv.innerHTML += `<div class="tag">${energy.en}</div>`;
+                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-zh hidden">${energy.zh}</div>`;
+                    coreEnergyDiv.innerHTML += `<div class="tag bilingual-text lang-en">${energy.en}</div>`;
                 }
             });
             
             // 更新天赋
-            if (currentLanguage === 'zh') {
-                talentPara.textContent = result.talent.zh;
-                talentEnPara.textContent = result.talent.en;
-            } else {
-                talentPara.textContent = result.talent.en;
-                talentEnPara.textContent = result.talent.zh;
-            }
+            talentPara.textContent = result.talent.zh;
+            talentEnPara.textContent = result.talent.en;
             
             // 更新幸运颜色
             luckyColorsDiv.innerHTML = '';
@@ -1147,7 +1160,8 @@
                 luckyColorsDiv.innerHTML += `
                     <div class="color-item">
                         <div class="color-sample" style="background-color: ${color.color};"></div>
-                        <span>${currentLanguage === 'zh' ? color.name.zh : color.name.en}</span>
+                        <span class="bilingual-text lang-zh">${color.name.zh}</span>
+                        <span class="bilingual-text lang-en hidden">${color.name.en}</span>
                     </div>
                 `;
             });
@@ -1160,23 +1174,21 @@
                         <div class="crystal-sample" style="background-color: ${crystal.color};">
                             ${crystal.icon}
                         </div>
-                        <span>${currentLanguage === 'zh' ? crystal.name.zh : crystal.name.en}</span>
+                        <span class="bilingual-text lang-zh">${crystal.name.zh}</span>
+                        <span class="bilingual-text lang-en hidden">${crystal.name.en}</span>
                     </div>
                 `;
             });
             
             // 更新建议
-            if (currentLanguage === 'zh') {
-                advicePara.textContent = result.advice.zh;
-                adviceEnPara.textContent = result.advice.en;
-            } else {
-                advicePara.textContent = result.advice.en;
-                adviceEnPara.textContent = result.advice.zh;
-            }
+            advicePara.textContent = result.advice.zh;
+            adviceEnPara.textContent = result.advice.en;
             
             // 显示结果部分
-            testSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
+            if (showSection) {
+                testSection.classList.add('hidden');
+                resultSection.classList.remove('hidden');
+            }
             
             // 更新结果页面的语言显示
             updateLanguageDisplay();
